@@ -13,4 +13,4 @@
 * Jarett Nishijo
 * Zeke Petersen (ezekielp@uoregon.edu)
 * Jack Sanders
-* Callista West
+* Callista West (cwest10@uoregon.edu)
