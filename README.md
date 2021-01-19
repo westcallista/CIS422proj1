@@ -12,5 +12,5 @@
 * Logan Levitre (llevitre@uoregon.edu)
 * Jarett Nishijo
 * Zeke Petersen (ezekielp@uoregon.edu)
-* Jack Sanders
+* Jack Sanders  (jsander5@uoregon.edu)
 * Callista West
