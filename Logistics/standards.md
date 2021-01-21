@@ -1,6 +1,6 @@
 ## Initial Standards
 -------------------
-The following information is intended to improve modularity and later integration. Documentation of code will be done by the software engineer who wrote it, but should be easily readable by other engineers. This information may be moved to a more permanent document later and will be updated as time goes on.
+The following information is intended to improve modularity and later integration. Documentation of code will be done by the software engineer who wrote it, but should be easily readable by other engineers. This information will be updated as time goes on.
 
 
 ### Documentation/Organization
@@ -31,4 +31,4 @@ The following information is intended to improve modularity and later integratio
 ### Data Expectations
 -------------------
 * A time series will be a csv of the form (time0,magnitude0),(time1,magnitude1),...,(timeN,magnitudeN) where time and magnitude are both non-negative values.
-  * Note: Logan and Jarett may have further input on this since Logan will be responsible for outputting data in this form and Jarett will be responsible for inputting data of this form. We may also get more info when we meet on the 1/19.
+  * Note: Logan and Jarett may have further input on this since Logan will be responsible for outputting data in this form and Jarett will be responsible for inputting data of this form.
