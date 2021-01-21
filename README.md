@@ -10,7 +10,7 @@
 ### Authors
 -----------
 * Logan Levitre (llevitre@uoregon.edu)
-* Jarett Nishijo
+* Jarett Nishijo (jnishijo@uoregon.edu)
 * Zeke Petersen (ezekielp@uoregon.edu)
 * Jack Sanders  (jsander5@uoregon.edu)
 * Callista West
