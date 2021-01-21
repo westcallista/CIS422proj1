@@ -11,6 +11,12 @@ Internal schedule for completing software goals.
 
 ### Phase 1
 -----------
+* Items to complete:
+  * Full functionality and test suites of the preprocessing, modeling, and visualization modules
+  * Basic tree structure (for manipulating the tree, not necessarily the pipelining functionality yet)
+  * Write SRS and SDS documents
+* Goal: Finish Phase 1 by 1/28
 
 ### Phase 2
 -----------
+* Goal: Finish Phase 2 by 1/5

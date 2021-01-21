@@ -28,9 +28,14 @@ Tracking for meeting date, time, duration, and content.
 * Clarified questions about the project-- important takeaways included:
     * The end result will essentially be an API for a programmer that wishes to create and modify trees.
     * Use DFS to minimize memory for storing the tree.
-    * "Backtracking" is not precisely what was meant-- that was more of a euphemism for tree manipulations.
+    * "Backtracking" is not precisely what was meant-- that was more of another way to say tree manipulations.
     * Preprocessing will take some reasonable judgement calls, for example, when missing data can be imputed or not or how to add timestamps to begin with.
 
 ### 1/21/2020 - First Mandatory Meeting
 ---------------------------------------
-10:30am-10:50am
+10:30am-10:50am (Zeke, Logan, Callista)
+* Presented documents that we have now
+* Clarified that we only have one user class to consider (data scientist) and example use cases are in the Jupyter Notebooks provided
+* Clarified that the diagrams are just a graphical schematic for how the modules fit together
+* Clarified that we can and likely should be wrapping the pandas functions that are the same as the project specified functions
+* The feedback is concern over how little code has been written thus far, however, since we have plans for self-imposed deadlines, it may be nothing to worry about
