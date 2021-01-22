@@ -39,3 +39,9 @@ Tracking for meeting date, time, duration, and content.
 * Clarified that the diagrams are just a graphical schematic for how the modules fit together
 * Clarified that we can and likely should be wrapping the pandas functions that are the same as the project specified functions
 * The feedback is concern over how little code has been written thus far, however, since we have plans for self-imposed deadlines, it may be nothing to worry about
+
+### 1/21/2020 - Weekly Team Meeting
+-----------------------------------
+6:00pm-6:30pm (all members present)
+* Established next Thursday (1/28) as the deadline for finalizing the modules and basic tree operations
+* Discussed overall system design
