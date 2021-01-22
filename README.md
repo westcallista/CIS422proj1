@@ -1,5 +1,8 @@
 ## Project 1: Time Series Analysis Support For Data Scientists
 ---------------------------------------------------------------
+Team: The Nerd Herd
+Date: 1/19/2021
+
 
 ### Project Description
 -----------------------

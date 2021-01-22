@@ -2,7 +2,7 @@
 -----------
 Tracking for meeting date, time, duration, and content.
 
-### 1/13/2020 - Initial Team Meeting
+### 1/13/2021 - Initial Team Meeting
 ------------------------------------
 6:00pm-6:20pm (all members present)
 * Divided up the project into two phases:
@@ -16,13 +16,13 @@ Tracking for meeting date, time, duration, and content.
   * Zeke - Team Leader
 * Goal before first meeting with client (scheduled early on 1/19 at 12pm) will be to become familiar with assigned module and identify clarifying questions
 
-### 1/19/2020 - Mini Team Meeting
+### 1/19/2021 - Mini Team Meeting
 ---------------------------------
 12:00pm-12:20pm (all members present)
 * Established Thursdays at 6:00pm as weekly checkin meetings
 * Clarified that Callista will begin creating the n-ary tree
 
-### 1/20/2020 - First Meeting with Client
+### 1/20/2021 - First Meeting with Client
 -----------------------------------------
 6:00pm-6:15pm (all members present)
 * Clarified questions about the project-- important takeaways included:
@@ -31,7 +31,7 @@ Tracking for meeting date, time, duration, and content.
     * "Backtracking" is not precisely what was meant-- that was more of another way to say tree manipulations.
     * Preprocessing will take some reasonable judgement calls, for example, when missing data can be imputed or not or how to add timestamps to begin with.
 
-### 1/21/2020 - First Mandatory Meeting
+### 1/21/2021 - First Mandatory Meeting
 ---------------------------------------
 10:30am-10:50am (Zeke, Logan, Callista)
 * Presented documents that we have now
@@ -40,7 +40,7 @@ Tracking for meeting date, time, duration, and content.
 * Clarified that we can and likely should be wrapping the pandas functions that are the same as the project specified functions
 * The feedback is concern over how little code has been written thus far, however, since we have plans for self-imposed deadlines, it may be nothing to worry about
 
-### 1/21/2020 - Weekly Team Meeting
+### 1/21/2021 - Weekly Team Meeting
 -----------------------------------
 6:00pm-6:30pm (all members present)
 * Established next Thursday (1/28) as the deadline for finalizing the modules and basic tree operations
