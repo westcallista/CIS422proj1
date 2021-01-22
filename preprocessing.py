@@ -1,10 +1,10 @@
 """
 File: preprocessing.py
 Class: CIS 422
-Date: January 20, 2021
+Date: January 21, 2021
 Team: The Nerd Herd
 Head Programmer: Logan Levitre
-Version 0.1.01
+Version 0.1.1
 
 Overview: Preprocessing functions to be used with Time Series Data.
     -- Need second opinion for revision of header structure --
@@ -12,7 +12,6 @@ Overview: Preprocessing functions to be used with Time Series Data.
 import pandas as pd
 import math
 import numpy as np
-import sklearn.model_selection as skl
 
 
 def read_from_file(input_file):
@@ -28,7 +27,6 @@ def read_from_file(input_file):
 
 def write_to_file(output_file, ts):
     """
-    --wrapper function--
     Takes Series and outputs the data into the output_file
     :param output_file: file to store data in
     :param ts: time_series to be stored
@@ -44,8 +42,8 @@ def denoise(time_series):
     :param time_series: Time series data
     :return: returns a new Time Series with less noise
     """
-    denoised_time_series = difference(time_series)
-    return denoised_time_series
+    clean_time_series = difference(time_series)
+    return clean_time_series
 
 
 def impute_missing_data(time_series):
@@ -58,15 +56,15 @@ def impute_missing_data(time_series):
     """
     # Possibly use .shape - Return a tuple representing the dimensionality of the DataFrame.
     restored_series = time_series.copy()
-    column = restored_series.columns
+    column = restored_series.columns - 1
     for idx in range(len(restored_series)):
         if restored_series.loc[idx, column - 1].isna():
-            if restored_series.loc[idx+1, column - 1].isna():
+            if restored_series.loc[idx + 1, column].isna():
                 # if sequential Na's exist take value of 4 rows ahead
-                restored_series.loc[idx, column - 1].fillna(restored_series.loc[idx+4, column - 1])
+                restored_series.loc[idx, column].fillna(restored_series.loc[idx + 4, column])
             # if singular Na, use data of next entry as a fill
             else:
-                restored_series.loc[idx, column - 1].fillna(restored_series.loc[idx+1, column - 1])
+                restored_series.loc[idx, column].fillna(restored_series.loc[idx + 1, column])
     return restored_series
 
 
@@ -77,7 +75,21 @@ def impute_outliers(time_series):
     :param time_series: Time series data
     :return: concise Time series without outliers
     """
-    pass
+    # create new time series w/o outliers
+    ts_without = time_series
+    # get last column location
+    column = ts_without.columns - 1
+    # get high quartile
+    quantile_high = ts_without[column].quantile(0.98)
+    # get low end quartile
+    quantile_low = ts_without[column].quantile(0.02)
+    # go through data in time_series
+    for idx in range(len(ts_without)):
+        # if value is outside quartile's delete it
+        if ts_without[idx, column] < quantile_low or ts_without[idx, column] > quantile_high:
+            # drop specific rows date, timestamp & value
+            ts_without.drop([idx])
+    return ts_without
 
 
 def longest_continuous_run(time_series):
@@ -89,10 +101,10 @@ def longest_continuous_run(time_series):
     """
     # copy time_series
     longest_run_ts = time_series.copy()
-    # get data values and store as array
     # DISCLAIMER: Code lines 92-101 Referenced from
     # https://stackoverflow.com/questions/41494444/pandas-find-longest-stretch-without-nan-values
-    ts_values = longest_run_ts.x.values
+    # get data values and store as array
+    ts_values = longest_run_ts.y.values
     # create mask of array as boolean
     mask = np.concatenate(([True], np.isnan(ts_values), [True]))
     # take out negative values if any
@@ -145,7 +157,12 @@ def difference(time_series):
     :param time_series: Time series data
     :return: time series containing the difference between each original entry
     """
-    pass
+    ts_difference = time_series
+    column = ts_difference.colums - 1
+    for idx in range(len(ts_difference)):
+        if idx is not len(ts_difference):
+            ts_difference.loc[idx, column] = time_series.loc[idx + 1, column] - time_series.loc[idx, column]
+    return ts_difference
 
 
 def scaling(time_series):
@@ -176,12 +193,13 @@ def logarithm(time_series):
      a version of previous values
     """
     log_10_time_series = time_series.copy()
-    columns = log_10_time_series.columns
+    columns = log_10_time_series.columns - 1
     for idx in range(len(log_10_time_series)):
         # go through each row of last column - assign cubed root of value at each
         # index of the column
-        log_10_time_series.loc[idx, columns - 1] =  math.log10(log_10_time_series.loc[idx,columns - 1])
+        log_10_time_series.loc[idx, columns] = math.log10(log_10_time_series.loc[idx, columns])
     return log_10_time_series
+
 
 def cubic_roots(time_series):
     """
@@ -192,11 +210,11 @@ def cubic_roots(time_series):
             the cubic root of previous values
     """
     cubed_time_series = time_series.copy()
-    columns = cubed_time_series.columns
+    columns = cubed_time_series.columns - 1
     for idx in range(len(cubed_time_series)):
         # go through each row of last column - assign cubed root of value at each
         # index of the column - idx = row
-        cubed_time_series.loc[idx, columns - 1] = math.pow(cubed_time_series.loc[idx, columns - 1], 1 / 3)
+        cubed_time_series.loc[idx, columns] = math.pow(cubed_time_series.loc[idx, columns], 1 / 3)
     return cubed_time_series
 
 
