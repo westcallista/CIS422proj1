@@ -11,6 +11,8 @@ Overview: Preprocessing functions to be used with Time Series Data.
 """
 import pandas as pd
 import math
+import numpy as np
+import sklearn.model_selection as skl
 
 
 def read_from_file(input_file):
@@ -40,9 +42,10 @@ def denoise(time_series):
     Removes noise from a time series. Produces a time series with less noise than
     the original one.
     :param time_series: Time series data
-    :return: returns a Time Series without noise
+    :return: returns a new Time Series with less noise
     """
-    pass
+    denoised_time_series = difference(time_series)
+    return denoised_time_series
 
 
 def impute_missing_data(time_series):
@@ -54,9 +57,17 @@ def impute_missing_data(time_series):
     :return: time series with filled in missing values
     """
     # Possibly use .shape - Return a tuple representing the dimensionality of the DataFrame.
-    for value in time_series:
-        if value.isna():
-            time_series[value].fillna(time_series[value + 1])
+    restored_series = time_series.copy()
+    column = restored_series.columns
+    for idx in range(len(restored_series)):
+        if restored_series.loc[idx, column - 1].isna():
+            if restored_series.loc[idx+1, column - 1].isna():
+                # if sequential Na's exist take value of 4 rows ahead
+                restored_series.loc[idx, column - 1].fillna(restored_series.loc[idx+4, column - 1])
+            # if singular Na, use data of next entry as a fill
+            else:
+                restored_series.loc[idx, column - 1].fillna(restored_series.loc[idx+1, column - 1])
+    return restored_series
 
 
 def impute_outliers(time_series):
@@ -74,9 +85,24 @@ def longest_continuous_run(time_series):
     Isolates the most extended portion of the time series without
     missing data.
     :param time_series: Time series data
-    :return: a time series without any missing data or outliers
+    :return: new a time series without any missing data or outliers
     """
-    pass
+    # copy time_series
+    longest_run_ts = time_series.copy()
+    # get data values and store as array
+    # DISCLAIMER: Code lines 92-101 Referenced from
+    # https://stackoverflow.com/questions/41494444/pandas-find-longest-stretch-without-nan-values
+    ts_values = longest_run_ts.x.values
+    # create mask of array as boolean
+    mask = np.concatenate(([True], np.isnan(ts_values), [True]))
+    # take out negative values if any
+    start_stop_limits = np.flatnonzero(mask[1:] != mask[:-1]).reshape(-1, 2)
+    # get start/stop indexes of longest run - subtract 1 from stop to get correct
+    # index of stop location
+    start, stop = start_stop_limits[(start_stop_limits[:, 1] - start_stop_limits[:, 0]).argmax()]
+    # clip time_series from start to stopping point to get longest run
+    longest_run_ts = clip(time_series, start, stop - 1)
+    return longest_run_ts
 
 
 def clip(time_series, starting_date, final_date):
@@ -87,7 +113,17 @@ def clip(time_series, starting_date, final_date):
     :param final_date: last date to be included in  new TS
     :return: a portion of the time series from start_date to final_date
     """
-    pass
+    # copy ts into new obj
+    clipped_time_series = time_series.copy()
+    # get placeholder for column with dates
+    column = clipped_time_series.columns[0]
+    # filter time series looking at dates
+    mask = (clipped_time_series[column] > starting_date) \
+           & (clipped_time_series[column] <= final_date)
+    # assign clipped_time_series to dates within time frame
+    clipped_time_series = clipped_time_series.loc[mask]
+    # return time frame
+    return clipped_time_series
 
 
 def assign_time(time_series, start, increment):
@@ -97,7 +133,7 @@ def assign_time(time_series, start, increment):
     :param time_series: Time series data
     :param start: beginning of the timestamp
     :param increment: difference to add to next timestamp
-    :return: time_series with timestamps assigned to each entry
+    :return: a new time_series with timestamps assigned to each entry
     """
     pass
 
@@ -139,20 +175,29 @@ def logarithm(time_series):
     :return: returns scaled time series containing log_10 results of generates
      a version of previous values
     """
-    for idx in time_series:
-        time_series[idx] = math.log10(time_series[idx])
-
+    log_10_time_series = time_series.copy()
+    columns = log_10_time_series.columns
+    for idx in range(len(log_10_time_series)):
+        # go through each row of last column - assign cubed root of value at each
+        # index of the column
+        log_10_time_series.loc[idx, columns - 1] =  math.log10(log_10_time_series.loc[idx,columns - 1])
+    return log_10_time_series
 
 def cubic_roots(time_series):
     """
     scales the time series where all entries are
-    the cubic root of the initial values.
+    the cubic root of the initial values. - Assume last column contains Data
     :param time_series: Time series data
-    :return: time series with entries being the cubic root of previous values
+    :return: a new time series with entries being
+            the cubic root of previous values
     """
-    for idx in time_series:
-        # re-look at pandas API - access looks to be tuples not linear array ?
-        time_series[idx] = math.pow(time_series[idx], 1 / 3)
+    cubed_time_series = time_series.copy()
+    columns = cubed_time_series.columns
+    for idx in range(len(cubed_time_series)):
+        # go through each row of last column - assign cubed root of value at each
+        # index of the column - idx = row
+        cubed_time_series.loc[idx, columns - 1] = math.pow(cubed_time_series.loc[idx, columns - 1], 1 / 3)
+    return cubed_time_series
 
 
 def split_data(time_series, perc_training, perc_valid, perc_test):
